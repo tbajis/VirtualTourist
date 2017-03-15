@@ -22,11 +22,6 @@ struct CoreDataStack {
     internal let backgroundContext: NSManagedObjectContext
     let context: NSManagedObjectContext
     
-    // Create shared instance for accesibility
-    static func sharedInstance(modelName: String) -> CoreDataStack {
-        return CoreDataStack(modelName: modelName)!
-    }
-    
     // MARK: Initializers
     
     init?(modelName: String) {
@@ -127,7 +122,11 @@ extension CoreDataStack {
 extension CoreDataStack {
     
     func save() {
-
+        // We call this synchronously, but it's a very fast
+        // operation (it doesn't hit the disk). We need to know
+        // when it ends so we can call the next save (on the persisting
+        // context). This last one might take some time and is done
+        // in a background queue
         context.performAndWait() {
             
             if self.context.hasChanges {

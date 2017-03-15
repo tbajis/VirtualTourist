@@ -21,6 +21,10 @@
 		134614771E7794BD00FFC0AB /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134614761E7794BD00FFC0AB /* FlickrClient.swift */; };
 		134614791E7794D100FFC0AB /* FlickrConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134614781E7794D100FFC0AB /* FlickrConvenience.swift */; };
 		1346147B1E7794E000FFC0AB /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346147A1E7794E000FFC0AB /* FlickrConstants.swift */; };
+		134614801E78952D00FFC0AB /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346147C1E78952D00FFC0AB /* Pin.swift */; };
+		134614811E78952D00FFC0AB /* Pin+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346147D1E78952D00FFC0AB /* Pin+CoreDataProperties.swift */; };
+		134614821E78952D00FFC0AB /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346147E1E78952D00FFC0AB /* Photo.swift */; };
+		134614831E78952D00FFC0AB /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346147F1E78952D00FFC0AB /* Photo+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +65,10 @@
 		134614761E7794BD00FFC0AB /* FlickrClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		134614781E7794D100FFC0AB /* FlickrConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConvenience.swift; sourceTree = "<group>"; };
 		1346147A1E7794E000FFC0AB /* FlickrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstants.swift; sourceTree = "<group>"; };
+		1346147C1E78952D00FFC0AB /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pin.swift; path = ../Pin.swift; sourceTree = "<group>"; };
+		1346147D1E78952D00FFC0AB /* Pin+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Pin+CoreDataProperties.swift"; path = "../Pin+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1346147E1E78952D00FFC0AB /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Photo.swift; path = ../Photo.swift; sourceTree = "<group>"; };
+		1346147F1E78952D00FFC0AB /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Photo+CoreDataProperties.swift"; path = "../Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +153,10 @@
 				1346146E1E74B54400FFC0AB /* CoreDataStack.swift */,
 				1346146B1E74B4E000FFC0AB /* Model.xcdatamodeld */,
 				134614741E77944100FFC0AB /* GCDBlackBox.swift */,
+				1346147C1E78952D00FFC0AB /* Pin.swift */,
+				1346147D1E78952D00FFC0AB /* Pin+CoreDataProperties.swift */,
+				1346147E1E78952D00FFC0AB /* Photo.swift */,
+				1346147F1E78952D00FFC0AB /* Photo+CoreDataProperties.swift */,
 				134614721E7793D000FFC0AB /* Clients */,
 			);
 			name = Models;
@@ -340,9 +352,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1346146F1E74B54400FFC0AB /* CoreDataStack.swift in Sources */,
+				134614831E78952D00FFC0AB /* Photo+CoreDataProperties.swift in Sources */,
+				134614801E78952D00FFC0AB /* Pin.swift in Sources */,
 				1346147B1E7794E000FFC0AB /* FlickrConstants.swift in Sources */,
+				134614811E78952D00FFC0AB /* Pin+CoreDataProperties.swift in Sources */,
 				134614371E747C8B00FFC0AB /* AppDelegate.swift in Sources */,
 				134614791E7794D100FFC0AB /* FlickrConvenience.swift in Sources */,
+				134614821E78952D00FFC0AB /* Photo.swift in Sources */,
 				134614771E7794BD00FFC0AB /* FlickrClient.swift in Sources */,
 				1346146A1E74803400FFC0AB /* PhotoAlbumViewController.swift in Sources */,
 				134614711E74BF1000FFC0AB /* TravelLocationsViewController.swift in Sources */,

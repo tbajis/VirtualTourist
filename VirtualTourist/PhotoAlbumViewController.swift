@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
 // MARK: - PhotoAlbumViewController: UIViewController
 
-class PhotoAlbumViewController: UIViewController {
+class PhotoAlbumViewController: UIViewController, MKMapViewDelegate {
     
+    // MARK: Properties
+    var pin: MKPinAnnotationView?
 }

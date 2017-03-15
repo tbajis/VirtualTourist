@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+// MARK: - FlickrClient (Convenient Resource Methods)
+
+extension FlickrClient {
+    
+}
