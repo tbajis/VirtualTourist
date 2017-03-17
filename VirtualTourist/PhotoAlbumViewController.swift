@@ -37,6 +37,17 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        executeSearch()
+        fetchedResultsController.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureLocation()
+    }
     
     // MARK: UIFunctions
     func configureCell(_ cell: PhotoAlbumCollectionViewCell, atIndexPath IndexPath: NSIndexPath) {
@@ -44,6 +55,16 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         let photo = fetchedResultsController.object(at: IndexPath as IndexPath) as! Photo
         if let imageData = photo.image {
             cell.photoAlbumCollectionImageView.image = UIImage(data: imageData as Data)
+        }
+    }
+    
+    func configureLocation() {
+        
+        if let mapAnnotation = pin {
+            let coordinate = CLLocationCoordinate2D(latitude: mapAnnotation.latitude, longitude: mapAnnotation.longitude)
+            mapView.addAnnotation(mapAnnotation)
+            mapView.camera.altitude = 10000.0
+            mapView.setCenter(coordinate, animated: true)
         }
     }
     
