@@ -141,7 +141,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate, NSFetc
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "displayPhotoAlbumViewController" {
-            let pin = sender as! MKPinAnnotationView
+            let pin = sender as! Pin
             let nextController = segue.destination as! PhotoAlbumViewController
             nextController.pin = pin
         }
