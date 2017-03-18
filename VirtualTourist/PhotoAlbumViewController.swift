@@ -115,11 +115,13 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
     
+        let set = IndexSet(integer: sectionIndex)
+        
         switch type {
         case .insert:
-            self.collectionView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet)
+            self.collectionView.insertSections(set)
         case .delete:
-            self.collectionView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet)
+            self.collectionView.deleteSections(set)
         default:
             return
         }
