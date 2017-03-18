@@ -36,6 +36,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var newCollectionButton: UIButton!
+    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +57,27 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     // MARK: Actions
+    @IBAction func pressedNewCollectionButton(_ sender: Any) {
     
+        if selectedIndexes.isEmpty {
+            deleteAllPhotos()
+            /* TODO: DISABLE COLLECTION BUTTON */
+            
+            FlickrClient.sharedInstance().getPhotosUsingFlickr(pin) { ( success, errorString) in
+                if success {
+                    performUIUpdatesOnMain {
+                        AppDelegate.stack.save()
+                        self.collectionView.reloadData()
+                        /* TODO: ENABLE COLLECTION BUTTON */
+                    }
+                }
+            }
+            
+        } else {
+            deleteSelectedPhotos()
+        }
+        self.collectionView.reloadData()
+    }
     
     // MARK: UIFunctions
     func configureCell(_ cell: PhotoAlbumCollectionViewCell, atIndexPath IndexPath: NSIndexPath) {
@@ -92,6 +114,28 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         } catch let e as NSError {
             print("Error while trying to perform a search: \n\(e)\n\(fetchedResultsController)")
         }
+    }
+    
+    // MARK: UtilityFuncs
+    func deleteAllPhotos() {
+        for photo in fetchedResultsController.fetchedObjects as! [Photo] {
+            AppDelegate.stack.context.delete(photo)
+        }
+        AppDelegate.stack.save()
+        selectedIndexes = [NSIndexPath]()
+    }
+    
+    func deleteSelectedPhotos() {
+        
+        var deletedPhotos = [Photo]()
+        for indexPath in selectedIndexes {
+            deletedPhotos.append(fetchedResultsController.object(at: indexPath as IndexPath) as! Photo)
+        }
+        for photo in deletedPhotos {
+            AppDelegate.stack.context.delete(photo)
+        }
+        AppDelegate.stack.save()
+        selectedIndexes = [NSIndexPath]()
     }
     
     // MARK: - UICollectionsviewDelegate Methods

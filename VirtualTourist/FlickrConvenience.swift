@@ -25,10 +25,11 @@ extension FlickrClient {
             FlickrClient.ParameterKeys.Method: FlickrClient.Methods.PhotosSearch as AnyObject,
             FlickrClient.ParameterKeys.APIKey: FlickrClient.ParameterValues.APIKey as AnyObject,
             FlickrClient.ParameterKeys.SafeSearch: FlickrClient.ParameterValues.SafeSearch as AnyObject,
-            FlickrClient.ParameterKeys.Latitude: pin?.latitude as AnyObject,
-            FlickrClient.ParameterKeys.Longitude: pin?.longitude as AnyObject,
+            FlickrClient.ParameterKeys.Latitude: pin?.coordinate.latitude as AnyObject,
+            FlickrClient.ParameterKeys.Longitude: pin?.coordinate.longitude as AnyObject,
             FlickrClient.ParameterKeys.Radius: FlickrClient.ParameterValues.Radius as AnyObject,
             FlickrClient.ParameterKeys.Extras: FlickrClient.ParameterValues.Extras as AnyObject,
+            FlickrClient.ParameterKeys.Format: FlickrClient.ParameterValues.ResponseFormat as AnyObject,
             FlickrClient.ParameterKeys.NoJSONCallback: FlickrClient.ParameterValues.DisableJSONCallback as AnyObject
         ]
     

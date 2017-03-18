@@ -163,7 +163,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="163" height="161"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZrO-R4-yEy">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZrO-R4-yEy">
                                                                     <rect key="frame" x="8" y="8" width="147" height="145"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
@@ -193,6 +193,9 @@
                                     <constraint firstAttribute="height" constant="60" id="HhP-lz-gJU"/>
                                 </constraints>
                                 <state key="normal" title="New Collection"/>
+                                <connections>
+                                    <action selector="pressedNewCollectionButton:" destination="ch9-k8-0yy" eventType="touchUpInside" id="Ybn-Ml-WOh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -213,6 +216,7 @@
                         <outlet property="collectionView" destination="h4r-99-yUY" id="OUw-wN-guj"/>
                         <outlet property="flowLayout" destination="FEX-jR-1JS" id="YxI-FU-76s"/>
                         <outlet property="mapView" destination="PEJ-8f-NQa" id="NJZ-YX-Vyl"/>
+                        <outlet property="newCollectionButton" destination="bqL-uI-KpY" id="GZv-XZ-HZo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OKc-0O-riY" userLabel="First Responder" sceneMemberID="firstResponder"/>
