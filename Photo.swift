@@ -25,7 +25,7 @@ class Photo: NSManagedObject {
         do {
             self.image = try Data(contentsOf: URL(string: mediaURL!)!)
         } catch {
-            print("Error creating image data")
+            print("Error parsing for image data in Photo initializer")
         }
     }
 }

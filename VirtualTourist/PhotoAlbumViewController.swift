@@ -35,7 +35,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +49,14 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         configureLocation()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        layoutCollectionView()
+    }
+    
+    // MARK: Actions
+    
+    
     // MARK: UIFunctions
     func configureCell(_ cell: PhotoAlbumCollectionViewCell, atIndexPath IndexPath: NSIndexPath) {
         
@@ -56,6 +64,15 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         if let imageData = photo.image {
             cell.photoAlbumCollectionImageView.image = UIImage(data: imageData as Data)
         }
+    }
+    
+    func layoutCollectionView() {
+        
+        let space: CGFloat = 3.0
+        let dimension = (self.collectionView.frame.size.width - (2 * space)) / 3.0
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.minimumLineSpacing = space
+        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
     }
     
     func configureLocation() {
