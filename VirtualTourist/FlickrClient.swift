@@ -47,6 +47,7 @@ class FlickrClient: NSObject {
                 return
             }
             
+            print(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertedData: completionHandlerForGET)
         }

@@ -38,6 +38,8 @@ extension FlickrClient {
         static let Extras = "extras"
         static let Format = "format"
         static let NoJSONCallback = "nojsoncallback"
+        static let PerPage = "per_page"
+        static let Page = "page"
     }
     
     // MARK: Parameter Values
@@ -45,7 +47,7 @@ extension FlickrClient {
         
         static let APIKey = "YOUR API KEY HERE"
         static let SafeSearch = "1"
-        static let Radius = "1"
+        static let Radius = "5"
         static let Extras = "url_m"
         static let ResponseFormat = "json"
         static let DisableJSONCallback = "1"
@@ -58,6 +60,8 @@ extension FlickrClient {
         static let Status = "stat"
         static let Photos = "photos"
         static let Photo = "photo"
+        static let Pages = "pages"
+        static let PerPage = "perpage"
         static let Id = "id"
         static let MediumURL = "url_m"
     }

@@ -96,6 +96,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="VirtualTourist" id="b3u-Cg-ea3">
+                        <barButtonItem key="backBarButtonItem" title="OK" id="GI2-iD-BSJ"/>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="Iur-cI-7xw">
                             <connections>
                                 <action selector="editbuttonPressed:" destination="BYZ-38-t0r" id="xpn-pd-GqM"/>
