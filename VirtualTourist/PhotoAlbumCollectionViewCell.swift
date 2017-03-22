@@ -11,7 +11,8 @@ import UIKit
 // MARK: - PhotoAlbumCollectionViewCell: UICollectionViewCell
 
 class PhotoAlbumCollectionViewCell: UICollectionViewCell {
-    
+
     // MARK: Outlets
     @IBOutlet weak var photoAlbumCollectionImageView: UIImageView!
+
 }
