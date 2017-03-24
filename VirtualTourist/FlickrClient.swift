@@ -12,6 +12,10 @@ import Foundation
 
 class FlickrClient: NSObject {
     
+    // MARK: Properties
+    var pageNumber: Int?
+    var photosPerPage: Int?
+    
     // Shared session
     var session = URLSession.shared
     

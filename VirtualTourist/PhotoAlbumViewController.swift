@@ -23,6 +23,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
     
+    
     // Create NSFetchedResultsController
     lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult> = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Photo")
@@ -42,25 +43,46 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureLocation()
         executeSearch()
         fetchedResultsController.delegate = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        print("viewDidLoad called")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("viewDidAppear called")
-        configureLocation()
+        print("viewWillAppear called")
+        
+        if pin?.photos?.count == 0 {
+            
+            FlickrClient.sharedInstance().getPhotosUsingFlickr2(pin) { (success, errorString) in
+                if success {
+                    performUIUpdatesOnMain {
+                        AppDelegate.stack.save()
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         layoutCollectionView()
+        print("subView layed out")
     }
     
     // MARK: Actions
     @IBAction func pressedNewCollectionButton(_ sender: Any) {
-    
+        
         if selectedIndexes.isEmpty {
+            deleteAllPhotos()
+        } else {
+            deleteSelectedPhotos()
+        }
+        
+        /*if selectedIndexes.isEmpty {
             deleteAllPhotos()
             newCollectionButton.isEnabled = false
             
@@ -68,7 +90,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
                 if success {
                     performUIUpdatesOnMain {
                         AppDelegate.stack.save()
-                        self.collectionView.reloadData()
+                        //self.collectionView.reloadData()
                         self.newCollectionButton.isEnabled = true
                         print("Collection Button enabled")
                     }
@@ -76,16 +98,65 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             }
         } else {
             deleteSelectedPhotos()
-            collectionView.reloadData()
-        }
+        }*/
     }
     
     // MARK: UIFunctions
-    func configureCell(_ cell: PhotoAlbumCollectionViewCell, atIndexPath IndexPath: NSIndexPath) {
+    func updateButton() {
+        if selectedIndexes.count > 0 {
+            newCollectionButton.setTitle("Remove Selected Photos", for: .normal)
+        } else {
+            newCollectionButton.setTitle("New Collection", for: .normal)
+        }
+    }
+    
+    func configureCell(_ cell: PhotoAlbumCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
         
-        let photo = fetchedResultsController.object(at: IndexPath as IndexPath) as! Photo
-        if let imageData = photo.image {
-            cell.photoAlbumCollectionImageView.image = UIImage(data: imageData as Data)
+        let photo = self.fetchedResultsController.object(at: indexPath as IndexPath) as! Photo
+        let placeHolderImage = UIImage(named: "Flickr_icon")
+        var cellImage = placeHolderImage
+        
+        cell.photoAlbumCollectionImageView.image = nil
+        
+        if let image = photo.image {
+            cellImage = UIImage(data: image)
+        } else {
+            cell.activityIndicator.startAnimating()
+            
+            let task = FlickrClient.sharedInstance().getFlickrImages(photo) { (success, errorString, imageData) in
+                if let error = errorString {
+                    print("Error occured in configureCell()")
+                    cellImage = nil
+                } else {
+                    if let data = imageData {
+                        photo.image = data
+                        performUIUpdatesOnMain {
+                            cell.activityIndicator.stopAnimating()
+                            cell.photoAlbumCollectionImageView.image = UIImage(data: data)
+                            /* UPDATE NEW COLLECTION BUTTON */
+                        }
+                    } else {
+                        print("Could not get the image data in configureCell")
+                    }
+                }
+            
+            }
+            cell.taskToCancelIfCellReused = task
+        }
+        cell.photoAlbumCollectionImageView.image = cellImage
+        
+        if cell.activityIndicator.isAnimating {
+            cell.activityIndicator.stopAnimating()
+        }
+        
+        if cell.activityIndicator.isAnimating {
+            cell.activityIndicator.stopAnimating()
+        }
+        
+        if let index = selectedIndexes.index(of: indexPath as NSIndexPath) {
+            cell.photoAlbumCollectionImageView.alpha = 0.25
+        } else {
+            cell.photoAlbumCollectionImageView.alpha = 1.0
         }
     }
     
@@ -124,7 +195,17 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             AppDelegate.stack.context.delete(photo)
         }
         AppDelegate.stack.save()
-        selectedIndexes = [NSIndexPath]()
+        
+        if pin?.photos?.count == 0 {
+            FlickrClient.sharedInstance().getPhotosUsingFlickr2(pin) { (success, errorString) in
+                if success {
+                    performUIUpdatesOnMain {
+                        AppDelegate.stack.save()
+                    }
+                }
+            
+            }
+        }
     }
     
     func deleteSelectedPhotos() {
@@ -136,27 +217,56 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         for photo in deletedPhotos {
             AppDelegate.stack.context.delete(photo)
         }
-        AppDelegate.stack.save()
         selectedIndexes = [NSIndexPath]()
+        updateButton()
     }
     
     // MARK: - UICollectionsviewDelegate Methods
+    /*func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.fetchedResultsController.sections?.count ?? 0
+    }*/
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
+        print("numberOfItemsInSection called")
         let sectionInfo = self.fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
+        print(sectionInfo.numberOfObjects)
+        //return sectionInfo.numberOfObjects
         return sectionInfo.numberOfObjects
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumCollectionViewCell", for: indexPath as IndexPath) as! PhotoAlbumCollectionViewCell
+        print("cellForItemAt called")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumCollectionViewCell", for: indexPath) as! PhotoAlbumCollectionViewCell
         configureCell(cell, atIndexPath: indexPath as NSIndexPath)
+        
+        
+        /*let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumCollectionViewCell", for: indexPath as IndexPath) as! PhotoAlbumCollectionViewCell
+        let photo = fetchedResultsController.object(at: indexPath as IndexPath) as! Photo
+        cell.activityIndicator.stopAnimating()
+        if photo.image != nil {
+            cell.photoAlbumCollectionImageView.image = UIImage(data: (photo.image)!)
+        }*/
+        
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
-        let cell = collectionView.cellForItem(at: indexPath) as! PhotoAlbumCollectionViewCell
+
+            let cell = collectionView.cellForItem(at: indexPath) as! PhotoAlbumCollectionViewCell
+            
+            if let index = selectedIndexes.index(of: indexPath as NSIndexPath) {
+                selectedIndexes.remove(at: index)
+            } else {
+                selectedIndexes.append(indexPath as NSIndexPath)
+            }
+            configureCell(cell, atIndexPath: indexPath as NSIndexPath)
+            updateButton()
+
+        
+        /*let cell = collectionView.cellForItem(at: indexPath) as! PhotoAlbumCollectionViewCell
         if let index = selectedIndexes.index(of: indexPath as NSIndexPath) {
             selectedIndexes.remove(at: index)
         } else {
@@ -167,16 +277,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
             newCollectionButton.setTitle("Remove Selected Photos", for: .normal)
         } else {
             newCollectionButton.setTitle("New Collection", for: .normal)
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("will display cell")
-        
-        let photo = fetchedResultsController.object(at: indexPath as IndexPath) as! Photo
-        if photo.image == nil {
-            newCollectionButton.isEnabled = false
-        }
+        }*/
     }
 
     // MARK: - NSFetchedResultsControllerDelegate Methods
@@ -229,6 +330,5 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
                 self.collectionView.reloadItems(at: [indexPath as IndexPath])
             }
         },  completion: nil)
-        print("Controller did change content")
     }
 }

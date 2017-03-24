@@ -22,10 +22,11 @@ class Photo: NSManagedObject {
         super.init(entity: entity, insertInto: context)
         self.id = dictionary[Photo.Constants.Id] as? String
         self.mediaURL = dictionary[Photo.Constants.MediaURL] as? String
-        do {
+        /*do {
             self.image = try Data(contentsOf: URL(string: mediaURL!)!)
         } catch {
             print("Error parsing for image data in Photo initializer")
-        }
+        }*/
     }
+
 }

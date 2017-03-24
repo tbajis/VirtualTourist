@@ -164,13 +164,26 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="163" height="161"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZrO-R4-yEy">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZrO-R4-yEy">
                                                                     <rect key="frame" x="8" y="8" width="147" height="145"/>
-                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 </imageView>
+                                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jSM-6K-8pk">
+                                                                    <rect key="frame" x="8.5" y="8.5" width="147" height="145"/>
+                                                                </activityIndicatorView>
                                                             </subviews>
                                                         </view>
+                                                        <constraints>
+                                                            <constraint firstItem="ZrO-R4-yEy" firstAttribute="trailing" secondItem="2o8-77-W31" secondAttribute="trailingMargin" id="A2N-pZ-13n"/>
+                                                            <constraint firstItem="jSM-6K-8pk" firstAttribute="height" secondItem="ZrO-R4-yEy" secondAttribute="height" id="Bz4-d9-iag"/>
+                                                            <constraint firstItem="ZrO-R4-yEy" firstAttribute="bottom" secondItem="2o8-77-W31" secondAttribute="bottomMargin" id="Ghn-2h-u1M"/>
+                                                            <constraint firstItem="jSM-6K-8pk" firstAttribute="width" secondItem="ZrO-R4-yEy" secondAttribute="width" id="TaK-Kv-vCb"/>
+                                                            <constraint firstItem="jSM-6K-8pk" firstAttribute="centerY" secondItem="ZrO-R4-yEy" secondAttribute="centerY" id="Xai-ng-4t7"/>
+                                                            <constraint firstItem="ZrO-R4-yEy" firstAttribute="top" secondItem="2o8-77-W31" secondAttribute="topMargin" id="ehq-8x-DL9"/>
+                                                            <constraint firstItem="jSM-6K-8pk" firstAttribute="centerX" secondItem="ZrO-R4-yEy" secondAttribute="centerX" id="q1T-0W-M55"/>
+                                                            <constraint firstItem="ZrO-R4-yEy" firstAttribute="leading" secondItem="2o8-77-W31" secondAttribute="leadingMargin" id="sEp-ix-GmR"/>
+                                                        </constraints>
                                                         <connections>
+                                                            <outlet property="activityIndicator" destination="jSM-6K-8pk" id="Qbt-YI-Quv"/>
                                                             <outlet property="photoAlbumCollectionImageView" destination="ZrO-R4-yEy" id="kCL-S4-Bzc"/>
                                                         </connections>
                                                     </collectionViewCell>

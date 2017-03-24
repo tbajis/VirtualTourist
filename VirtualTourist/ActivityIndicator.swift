@@ -16,15 +16,15 @@ class ActivityIndicator {
     private var loadingView = UIView()
     private var activityIndicator = UIActivityIndicatorView()
     
-    func startActivityIndicator(_ hostViewController: UIViewController) {
+    func startActivityIndicator(_ hostView: UIView) {
         
         container.tag = 100
-        container.frame = hostViewController.view.frame
-        container.center = hostViewController.view.center
+        container.frame = hostView.frame
+        container.center = hostView.center
         container.backgroundColor = UIColor(red: 0.77, green: 0.75, blue: 0.75, alpha: 0.6)
         
         loadingView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-        loadingView.center = hostViewController.view.center
+        loadingView.center = hostView.center
         loadingView.backgroundColor = UIColor(red: 0.77, green: 0.75, blue: 0.75, alpha: 0.9)
         loadingView.clipsToBounds = true
         loadingView.layer.cornerRadius = 10
@@ -37,13 +37,13 @@ class ActivityIndicator {
         loadingView.addSubview(activityIndicator)
         container.addSubview(loadingView)
         activityIndicator.startAnimating()
-        hostViewController.view.addSubview(container)
+        hostView.addSubview(container)
         UIApplication.shared.beginIgnoringInteractionEvents()
     }
     
-    func stopActivityIndicator(_ hostViewController: UIViewController) {
+    func stopActivityIndicator(_ hostView: UIView) {
         activityIndicator.stopAnimating()
-        hostViewController.view.viewWithTag(100)?.removeFromSuperview()
+        hostView.viewWithTag(100)?.removeFromSuperview()
         UIApplication.shared.endIgnoringInteractionEvents()
     }
     
