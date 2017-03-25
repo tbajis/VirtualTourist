@@ -58,9 +58,11 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         
         if pin?.photos?.count == 0 {
             
+            ActivityIndicator.sharedInstance().startActivityIndicator(inView: collectionView)
             FlickrClient.sharedInstance().getPhotosUsingFlickr(pin) { (success, errorString) in
                 if success {
                     performUIUpdatesOnMain {
+                        ActivityIndicator.sharedInstance().stopActivityIndicator(inView: self.collectionView)
                         AppDelegate.stack.save()
                     }
                 }
@@ -86,6 +88,13 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     }
     
     // MARK: UIFunctions
+    func displayError(_ errorString: String?) {
+        
+        let alertController = UIAlertController(title: "Error", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     func layoutCollectionView() {
         
         let space: CGFloat = 3.0
@@ -174,12 +183,14 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         for photo in fetchedResultsController.fetchedObjects as! [Photo] {
             AppDelegate.stack.context.delete(photo)
         }
-        AppDelegate.stack.save()
         
-        if pin?.photos?.count == 0 {
+        AppDelegate.stack.save()
+        if fetchedResultsController.fetchedObjects?.count == 0 {
+            ActivityIndicator.sharedInstance().startActivityIndicator(inView: collectionView)
             FlickrClient.sharedInstance().getPhotosUsingFlickr(pin) { (success, errorString) in
                 if success {
                     performUIUpdatesOnMain {
+                        ActivityIndicator.sharedInstance().stopActivityIndicator(inView: self.collectionView)
                         AppDelegate.stack.save()
                     }
                 }

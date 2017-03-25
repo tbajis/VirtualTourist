@@ -26,6 +26,7 @@
 		134614821E78952D00FFC0AB /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346147E1E78952D00FFC0AB /* Photo.swift */; };
 		134614831E78952D00FFC0AB /* Photo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1346147F1E78952D00FFC0AB /* Photo+CoreDataProperties.swift */; };
 		134614891E7B67C800FFC0AB /* PhotoAlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134614881E7B67C800FFC0AB /* PhotoAlbumCollectionViewCell.swift */; };
+		139B56FD1E85FF7400F07E95 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139B56FC1E85FF7400F07E95 /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		1346147F1E78952D00FFC0AB /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Photo+CoreDataProperties.swift"; path = "../Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		134614881E7B67C800FFC0AB /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		139B56FB1E85B10700F07E95 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
+		139B56FC1E85FF7400F07E95 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				134614881E7B67C800FFC0AB /* PhotoAlbumCollectionViewCell.swift */,
+				139B56FC1E85FF7400F07E95 /* ActivityIndicator.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1346146F1E74B54400FFC0AB /* CoreDataStack.swift in Sources */,
+				139B56FD1E85FF7400F07E95 /* ActivityIndicator.swift in Sources */,
 				134614831E78952D00FFC0AB /* Photo+CoreDataProperties.swift in Sources */,
 				134614801E78952D00FFC0AB /* Pin.swift in Sources */,
 				1346147B1E7794E000FFC0AB /* FlickrConstants.swift in Sources */,
