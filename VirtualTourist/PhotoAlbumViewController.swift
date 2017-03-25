@@ -43,6 +43,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        newCollectionButton.isEnabled = false
         configureLocation()
         executeSearch()
         fetchedResultsController.delegate = self
@@ -77,6 +78,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
     @IBAction func pressedNewCollectionButton(_ sender: Any) {
         
         if selectedIndexes.isEmpty {
+            newCollectionButton.isEnabled = false
             deleteAllPhotos()
         } else {
             deleteSelectedPhotos()
@@ -110,6 +112,14 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         }
     }
     
+    func checkifButtonShouldChange(checkIf cell: PhotoAlbumCollectionViewCell, isDisplaying placeHolder: UIImage) {
+        if cell.photoAlbumCollectionImageView.image == placeHolder {
+            newCollectionButton.isEnabled = false
+        } else {
+            newCollectionButton.isEnabled = true
+        }
+    }
+    
     func configureCell(_ cell: PhotoAlbumCollectionViewCell, atIndexPath indexPath: NSIndexPath) {
         
         let photo = self.fetchedResultsController.object(at: indexPath as IndexPath) as! Photo
@@ -121,7 +131,6 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         if let image = photo.image {
             cellImage = UIImage(data: image)
         } else {
-            cell.activityIndicator.startAnimating()
             
             let task = FlickrClient.sharedInstance().getFlickrImages(photo) { (success, errorString, imageData) in
                 if let error = errorString {
@@ -131,9 +140,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
                     if let data = imageData {
                         photo.image = data
                         performUIUpdatesOnMain {
-                            cell.activityIndicator.stopAnimating()
                             cell.photoAlbumCollectionImageView.image = UIImage(data: data)
-                            /* UPDATE NEW COLLECTION BUTTON */
                         }
                     } else {
                         print("Could not get the image data in configureCell")
@@ -145,13 +152,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         }
         cell.photoAlbumCollectionImageView.image = cellImage
         
-        if cell.activityIndicator.isAnimating {
-            cell.activityIndicator.stopAnimating()
-        }
-        
-        if cell.activityIndicator.isAnimating {
-            cell.activityIndicator.stopAnimating()
-        }
+        checkifButtonShouldChange(checkIf: cell, isDisplaying: placeHolderImage!)
         
         if let index = selectedIndexes.index(of: indexPath as NSIndexPath) {
             cell.photoAlbumCollectionImageView.alpha = 0.25
@@ -234,7 +235,7 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         //return sectionInfo.numberOfObjects
         return sectionInfo.numberOfObjects
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         print("cellForItemAt called")

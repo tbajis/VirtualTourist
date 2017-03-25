@@ -73,6 +73,7 @@
 		1346147F1E78952D00FFC0AB /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Photo+CoreDataProperties.swift"; path = "../Photo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		134614881E7B67C800FFC0AB /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
 		1346148C1E80F22800FFC0AB /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		139B56FB1E85B10700F07E95 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -638,6 +639,7 @@
 				1346145D1E747C8B00FFC0AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1346145E1E747C8B00FFC0AB /* Build configuration list for PBXNativeTarget "VirtualTouristTests" */ = {
 			isa = XCConfigurationList;
@@ -646,6 +648,7 @@
 				134614601E747C8B00FFC0AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		134614611E747C8B00FFC0AB /* Build configuration list for PBXNativeTarget "VirtualTouristUITests" */ = {
 			isa = XCConfigurationList;
@@ -654,6 +657,7 @@
 				134614631E747C8B00FFC0AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -661,6 +665,7 @@
 		1346146B1E74B4E000FFC0AB /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				139B56FB1E85B10700F07E95 /* Model 2.xcdatamodel */,
 				1346146C1E74B4E000FFC0AB /* Model.xcdatamodel */,
 			);
 			currentVersion = 1346146C1E74B4E000FFC0AB /* Model.xcdatamodel */;

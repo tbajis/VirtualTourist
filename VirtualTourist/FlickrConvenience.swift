@@ -71,7 +71,7 @@ extension FlickrClient {
             }
             numberOfPagesFromRequest = numberOfPages
             totalNumberOfPages = Int(totalPerPage)
-            let numberOfPhotos = min(totalNumberOfPages!, 45)
+            let numberOfPhotos = min(totalNumberOfPages!, 21)
             let pageLimit = min(numberOfPagesFromRequest!, 50)
             let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
             self.getPhotosUsingPage(pin, randomPage: randomPage, perPage: numberOfPhotos, completionHandlerForGETPhotosUsingPage: completionHandlerForGETPhotosUsingFlickr)

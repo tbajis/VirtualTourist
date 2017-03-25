@@ -167,7 +167,7 @@
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZrO-R4-yEy">
                                                                     <rect key="frame" x="8" y="8" width="147" height="145"/>
                                                                 </imageView>
-                                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jSM-6K-8pk">
+                                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jSM-6K-8pk">
                                                                     <rect key="frame" x="8.5" y="8.5" width="147" height="145"/>
                                                                 </activityIndicatorView>
                                                             </subviews>
