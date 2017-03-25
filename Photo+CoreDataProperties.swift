@@ -12,11 +12,13 @@ import CoreData
 
 extension Photo {
 
+    // MARK: Photo Constants
     struct Constants {
         static let MediaURL = FlickrClient.ResponseKeys.MediumURL
         static let Id = FlickrClient.ResponseKeys.Id
     }
     
+    // MARK: Properties
     @NSManaged var image: Data?
     @NSManaged var mediaURL: String?
     @NSManaged var id: String?

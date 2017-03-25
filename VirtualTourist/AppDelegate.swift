@@ -12,6 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    // Create a shared stack for managing the main context
     static let stack = CoreDataStack(modelName: "Model")!
 
 

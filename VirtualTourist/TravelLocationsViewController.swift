@@ -18,6 +18,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate, NSFetc
     enum PresentationState { case configure, on, off }
     var presentationState: Bool!
     
+    /* Create a fetchedResultsController to retrieve and monitor changes in CoreDataModel */
     lazy var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>? = {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true)]
@@ -40,12 +41,12 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate, NSFetc
         executeSearch()
         loadPersistedRegion()
         setPersistedLocations()
-        print("view loaded")
+        //print("view loaded")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("view appeared")
+        //print("view appeared")
     }
     
     // MARK: Actions
@@ -64,13 +65,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate, NSFetc
             let locationCoord = self.mapView.convert(location, toCoordinateFrom: self.mapView)
             let pinAnnotation = Pin(latitude: locationCoord.latitude, longitude: locationCoord.longitude, context: AppDelegate.stack.context)
             self.mapView.addAnnotation(pinAnnotation)
-            /* COULD START GETTING PHOTOS FOR FLICKR HERE */
-            do {
-                try AppDelegate.stack.save()
-                print("SAVED PIN")
-            } catch {
-                fatalError("Error while saving")
-            }
+            AppDelegate.stack.save()
         }
     }
 
@@ -174,11 +169,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate, NSFetc
                 let pin = view.annotation as! Pin
                 mapView.removeAnnotation(pin)
                 AppDelegate.stack.context.delete(pin)
-                do {
-                    try AppDelegate.stack.save()
-                } catch {
-                    fatalError("Error while saving")
-                }
+                AppDelegate.stack.save()
             }
         }
     }
@@ -197,11 +188,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate, NSFetc
         if newState == .ending {
             let annotation = view.annotation as! Pin
             mapView.addAnnotation(annotation)
-            do {
-                try AppDelegate.stack.save()
-            } catch {
-                fatalError("Error while saving")
-            }
+            AppDelegate.stack.save()
         }
     }
 

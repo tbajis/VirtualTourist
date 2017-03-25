@@ -12,6 +12,7 @@ import Foundation
 
 extension FlickrClient {
 
+    // Get images from urls stored in CoreData, show in photoAlbumCollectionViewController
     func getFlickrImages(_ photo: Photo?, completionHandlerForGetFlickrImages: @escaping (_ success: Bool, _ errorString: String?, _ imageData: Data?) -> Void) -> URLSessionTask {
         
         let flickrURL = photo?.mediaURL
@@ -29,7 +30,8 @@ extension FlickrClient {
         return task
     }
     
-    func getPhotosUsingFlickr2(_ pin: Pin?, completionHandlerForGETPhotosUsingFlickr: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+    // Get the number of pages and photos per page for a given request with pin
+    func getPhotosUsingFlickr(_ pin: Pin?, completionHandlerForGETPhotosUsingFlickr: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         guard pin != nil else {
             print("Could not acquire pin value for photo search")
@@ -38,7 +40,7 @@ extension FlickrClient {
         }
         
         /* 1. Specify the parameters */
-        var parameters: [String:AnyObject]? = [
+        let parameters: [String:AnyObject]? = [
             FlickrClient.ParameterKeys.Method: FlickrClient.Methods.PhotosSearch as AnyObject,
             FlickrClient.ParameterKeys.APIKey: FlickrClient.ParameterValues.APIKey as AnyObject,
             FlickrClient.ParameterKeys.SafeSearch: FlickrClient.ParameterValues.SafeSearch as AnyObject,
@@ -49,24 +51,26 @@ extension FlickrClient {
             FlickrClient.ParameterKeys.Format: FlickrClient.ParameterValues.ResponseFormat as AnyObject,
             FlickrClient.ParameterKeys.NoJSONCallback: FlickrClient.ParameterValues.DisableJSONCallback as AnyObject
         ]
-        
-        /* 2. Make the request */
         var numberOfPagesFromRequest: Int?
         var totalNumberOfPages: Int?
         
+        /* 2. Make the request */
         let _ = taskForGETMethod(parameters: parameters!) { (results, error) in
             
             /* 3. Send the desired values to the completion handler */
             guard (error == nil) else {
                 print("There was an error in getFlickrPhotos")
+                completionHandlerForGETPhotosUsingFlickr(false, "An error occured trying to retrieve photos from Flickr!")
                 return
             }
-            guard let status = results?[FlickrClient.ResponseKeys.Status] as? String, status == "ok" else {
+            guard let status = results?[FlickrClient.ResponseKeys.Status] as? String, status == FlickrClient.ResponseValues.OKStatus else {
                 print("There was a status error in getFlickrPhotos")
+                completionHandlerForGETPhotosUsingFlickr(false, "A status code error occured from Flickr!")
                 return
             }
             guard let photosDictionary = results?[FlickrClient.ResponseKeys.Photos] as? [String:AnyObject], let numberOfPages = photosDictionary[FlickrClient.ResponseKeys.Pages] as? Int, let totalPerPage = photosDictionary[FlickrClient.ResponseKeys.PerPage] as? Int else {
                 print("There was an error parsing photos for page number")
+                completionHandlerForGETPhotosUsingFlickr(false, "An error occured downloading photos from Flickr!")
                 return
             }
             numberOfPagesFromRequest = numberOfPages
@@ -76,9 +80,9 @@ extension FlickrClient {
             let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
             self.getPhotosUsingPage(pin, randomPage: randomPage, perPage: numberOfPhotos, completionHandlerForGETPhotosUsingPage: completionHandlerForGETPhotosUsingFlickr)
         }
-
     }
     
+    // Download image data from Flickr by request using pin and a random page number)
     private func getPhotosUsingPage(_ pin: Pin?, randomPage: Int?, perPage: Int?, completionHandlerForGETPhotosUsingPage: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
         
         guard pin != nil else {
@@ -88,7 +92,7 @@ extension FlickrClient {
         }
         
         /* 1. Specify the parameters */
-        var parameters: [String:AnyObject]? = [
+        let parameters: [String:AnyObject]? = [
             FlickrClient.ParameterKeys.Method: FlickrClient.Methods.PhotosSearch as AnyObject,
             FlickrClient.ParameterKeys.APIKey: FlickrClient.ParameterValues.APIKey as AnyObject,
             FlickrClient.ParameterKeys.SafeSearch: FlickrClient.ParameterValues.SafeSearch as AnyObject,
@@ -111,17 +115,17 @@ extension FlickrClient {
                 completionHandlerForGETPhotosUsingPage(false, error)
                 return
             }
-            guard let status = results?[FlickrClient.ResponseKeys.Status] as? String, status == "ok" else {
+            guard let status = results?[FlickrClient.ResponseKeys.Status] as? String, status == FlickrClient.ResponseValues.OKStatus else {
                 print("There was a status error in getFlickrPhotos")
-                completionHandlerForGETPhotosUsingPage(false, "Response returned a bad status code!")
+                completionHandlerForGETPhotosUsingPage(false, "A status code error occured from Flickr!")
                 return
             }
             guard let photosDictionary = results?[FlickrClient.ResponseKeys.Photos] as? [String:AnyObject], let photoArrayOfDictionaries = photosDictionary[FlickrClient.ResponseKeys.Photo] as? [[String:AnyObject]] else {
                 print("There was an error parsing photos")
-                completionHandlerForGETPhotosUsingPage(false, "Could not load photos from Flickr!")
+                completionHandlerForGETPhotosUsingPage(false, "An error occured downloading photos from Flickr!")
                 return
             }
-            print("Successfully parsed photos!")
+            //print("Successfully parsed photos!")
             
             for photoDictionary in photoArrayOfDictionaries {
                 let photo = Photo(dictionary: photoDictionary, context: AppDelegate.stack.context)

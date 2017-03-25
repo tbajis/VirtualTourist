@@ -13,22 +13,11 @@ import MapKit
 
 class Pin: NSManagedObject, MKAnnotation {
 
+    // Allow Pin class to conform to MKAnnotation
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
-    // MARK: Initializers
-/*    convenience init(latitude: Double, longitude: Double, context: NSManagedObjectContext) {
-        
-        if let entity = NSEntityDescription.entity(forEntityName: "Pin", in: context) {
-            self.init(entity: entity, insertInto: context)
-            self.latitude = latitude
-            self.longitude = longitude
-        } else {
-            fatalError("Unable to find Entity name!")
-        }
-    }
-*/
     // MARK: Initializers
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
@@ -40,8 +29,4 @@ class Pin: NSManagedObject, MKAnnotation {
         self.latitude = latitude
         self.longitude = longitude
     }
-
-
-
-
 }

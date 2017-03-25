@@ -12,10 +12,6 @@ import Foundation
 
 class FlickrClient: NSObject {
     
-    // MARK: Properties
-    var pageNumber: Int?
-    var photosPerPage: Int?
-    
     // Shared session
     var session = URLSession.shared
     
@@ -50,8 +46,8 @@ class FlickrClient: NSObject {
                 sendError("No data was returned by the request!")
                 return
             }
+            //print(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)
             
-            print(NSString(data: data, encoding: String.Encoding.utf8.rawValue)!)
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertedData: completionHandlerForGET)
         }
@@ -84,7 +80,7 @@ class FlickrClient: NSObject {
             parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:AnyObject]
         } catch {
             completionHandlerForConvertedData(nil, "Could not serialize the data from JSON")
-            print("Serialization FAILED")
+            //print("Serialization FAILED")
         }
         completionHandlerForConvertedData(parsedResult, nil)
     }
