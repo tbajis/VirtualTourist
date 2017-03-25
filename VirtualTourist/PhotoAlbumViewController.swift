@@ -183,8 +183,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         for photo in fetchedResultsController.fetchedObjects as! [Photo] {
             AppDelegate.stack.context.delete(photo)
         }
-        
         AppDelegate.stack.save()
+        
         if fetchedResultsController.fetchedObjects?.count == 0 {
             ActivityIndicator.sharedInstance().startActivityIndicator(inView: collectionView)
             FlickrClient.sharedInstance().getPhotosUsingFlickr(pin) { (success, errorString) in
@@ -208,6 +208,8 @@ class PhotoAlbumViewController: UIViewController, UICollectionViewDelegate, UICo
         for photo in deletedPhotos {
             AppDelegate.stack.context.delete(photo)
         }
+        AppDelegate.stack.save()
+        
         selectedIndexes = [NSIndexPath]()
         updateButton()
     }
